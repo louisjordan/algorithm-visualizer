@@ -15,11 +15,7 @@ const InsertionSortVisualiser: React.FC<Props> = props => {
         return item;
     });
 
-    return (
-        <div>
-            <ArrayRenderer elements={elements} pointer={trace.pointer} />
-        </div>
-    );
+    return <ArrayRenderer elements={trace.list} pointer={trace.pointer} position={trace.position} />;
 };
 
 export default InsertionSortVisualiser;

@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
-import insertionSort, { InsertionSortState } from '../algorithms/insertion-sort';
-import InsertionSort from '../visualisers/insertion-sort';
+import insertionSort from '../algorithms/insertion-sort';
 import { StateTracer } from '../tracer';
+import Menu from './menu';
+import Visualiser from './visualiser';
+import Controls from './controls';
+import VisualiserLayout from './layouts/visualiser';
+
 import './style.css';
+import './reset.css';
 
 const initial = [3, 5, 2, 7, 3];
 const tracer = new StateTracer();
 const result = insertionSort(tracer, initial);
+
+const menuGroups = [{ id: 'sorting', name: 'Sorting', items: [{ id: 'insertion-sort', name: 'Insertion Sort' }] }];
 
 const App: React.FC = () => {
     const [position, setPosition] = useState(0);
@@ -18,13 +25,11 @@ const App: React.FC = () => {
     function prev() {
         setPosition(position => (position > 0 ? position - 1 : position));
     }
+
     return (
         <div className="App">
-            <InsertionSort trace={tracer.at(position).value as InsertionSortState} />
-            <button onClick={prev}>Prev</button>
-            <button onClick={next}>Next</button>
-            <br />
-            {position + 1}/{tracer.history.length}
+            <Menu groups={menuGroups} />
+            <VisualiserLayout tracer={tracer} position={position} next={next} prev={prev} />
         </div>
     );
 };
