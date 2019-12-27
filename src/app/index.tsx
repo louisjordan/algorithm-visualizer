@@ -13,23 +13,36 @@ const initial = [3, 5, 2, 7, 3];
 const tracer = new StateTracer();
 const result = insertionSort(tracer, initial);
 
-const menuGroups = [{ id: 'sorting', name: 'Sorting', items: [{ id: 'insertion-sort', name: 'Insertion Sort' }] }];
+const menuGroups = [
+    {
+        id: 'sorting',
+        name: 'Sorting',
+        items: [{ id: 'insertion-sort', name: 'Insertion Sort' }],
+    },
+];
 
 const App: React.FC = () => {
     const [position, setPosition] = useState(0);
 
     function next() {
-        setPosition(position => (tracer.history.length - 1 > position ? position + 1 : position));
+        setPosition((position) =>
+            tracer.history.length - 1 > position ? position + 1 : position
+        );
     }
 
     function prev() {
-        setPosition(position => (position > 0 ? position - 1 : position));
+        setPosition((position) => (position > 0 ? position - 1 : position));
     }
 
     return (
         <div className="App">
             <Menu groups={menuGroups} />
-            <VisualiserLayout tracer={tracer} position={position} next={next} prev={prev} />
+            <VisualiserLayout
+                tracer={tracer}
+                position={position}
+                next={next}
+                prev={prev}
+            />
         </div>
     );
 };

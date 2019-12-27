@@ -5,7 +5,7 @@ import ArrayRenderer from '../renderers/array';
 type Props = {
     trace: InsertionSortState;
 };
-const InsertionSortVisualiser: React.FC<Props> = props => {
+const InsertionSortVisualiser: React.FC<Props> = (props) => {
     const { trace } = props;
     const elements = trace.list.map((item, index) => {
         if (trace.position === index) {
@@ -15,7 +15,13 @@ const InsertionSortVisualiser: React.FC<Props> = props => {
         return item;
     });
 
-    return <ArrayRenderer elements={trace.list} pointer={trace.pointer} position={trace.position} />;
+    return (
+        <ArrayRenderer
+            elements={trace.list}
+            pointer={trace.pointer}
+            position={trace.position}
+        />
+    );
 };
 
 export default InsertionSortVisualiser;
