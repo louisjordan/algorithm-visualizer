@@ -1,4 +1,6 @@
-function generateCode(source: string) {}
+export default function generateCode(source: string) {
+    return stripTracerParameter(stripTracerCalls(source));
+}
 
 const DEFAULT_TRACER_TOKEN = 'tracer';
 

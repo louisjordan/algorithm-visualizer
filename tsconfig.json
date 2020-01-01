@@ -14,8 +14,8 @@
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
     "isolatedModules": true,
+    "resolveJsonModule": true,
     "noEmit": true,
     "jsx": "react"
   },
