@@ -20,8 +20,8 @@
         "build": "npm run build-sources && react-scripts build",
         "build-sources": "ts-node --skip-project src/code-generator/algorithms/index.ts",
         "test": "react-scripts test",
-        "test-ci": "npm run test --ci --watchAll=false",
-        "update-snapshots": "npm run test --updateSnapshot",
+        "test-ci": "react-scripts test --ci --watchAll=false",
+        "update-snapshots": "react-scripts test --updateSnapshot",
         "format": "prettier --config='./.prettierrc' --list-different --write src/**/*",
         "eject": "react-scripts eject"
     },
