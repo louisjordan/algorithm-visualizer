@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import insertionSort from '../algorithms/insertion-sort';
 import { StateTracer } from '../tracer';
 import Menu from './menu';
 import Visualiser from './visualiser';
@@ -8,6 +7,9 @@ import VisualiserLayout from './layouts/visualiser';
 
 import './style.css';
 import './reset.css';
+
+import insertionSort from '../algorithms/insertion-sort';
+import insertionSortSource from '../algorithms/insertion-sort/source.json';
 
 const initial = [3, 5, 2, 7, 3];
 const tracer = new StateTracer();
@@ -38,6 +40,7 @@ const App: React.FC = () => {
         <div className="App">
             <Menu groups={menuGroups} />
             <VisualiserLayout
+                source={insertionSortSource.functions.join('\n\n')}
                 tracer={tracer}
                 position={position}
                 next={next}
