@@ -26,5 +26,12 @@ algorithmPaths().forEach(({ algorithmPath }) => {
         4
     );
 
-    fs.writeFileSync(outputPath, output);
+    let currentContent = '';
+    try {
+        currentContent = fs.readFileSync(outputPath, 'utf-8');
+    } catch (e) {}
+
+    if (output !== currentContent) {
+        fs.writeFileSync(outputPath, output);
+    }
 });

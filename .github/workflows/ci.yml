@@ -1,15 +1,16 @@
-name: CI
+name: Unit Tests
 
 on: [push]
 
 jobs:
-  build:
+    build:
+        runs-on: ubuntu-latest
 
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v1
-    - name: Install dependencies
-      run: npm install
-    - name: Run tests
-      run: npm run test
+        steps:
+            - uses: actions/checkout@v1
+            - name: Install dependencies
+              run: npm install
+            - name: Build
+              run: npm run build-sources
+            - name: Run tests
+              run: npm run test-ci
