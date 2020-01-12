@@ -8,7 +8,6 @@ type Props = {
 };
 const InsertionSortVisualiser: React.FC<Props> = (props) => {
     const { tracer, position } = props;
-    console.log(tracer, position);
     const { state } = tracer.at(position);
 
     const elements = state.list.map((item, index) => {

@@ -1,6 +1,6 @@
-import insertionSort from './algorithm';
-import { Tracer } from '../../tracer';
-import { InsertionSortTracerState } from './types';
+import insertionSort from '../algorithm';
+import { Tracer } from 'tracer';
+import { InsertionSortTracerState } from '../types';
 
 describe('InsertionSort', () => {
     it('should sort an array of integers', () => {
