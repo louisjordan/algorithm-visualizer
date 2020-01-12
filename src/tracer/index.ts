@@ -1,42 +1,23 @@
-export interface Tracer {
-    state: { [key: string]: any };
-    set(key: string, value: any): Tracer;
-    get(key: string): any;
-    update: {
-        (): void;
-        (key: string, value: any): void;
-    };
-}
-
-export class MockTracer implements Tracer {
-    state: { [key: string]: any };
-    constructor() {
-        this.state = [];
-    }
-    set(key: string, value: any) {
-        return this;
-    }
-    get(key: string) {}
-    update(key?: string, value?: any) {
-        return this;
-    }
-}
-
-export class StateTracer implements Tracer {
-    state: { [key: string]: any };
-    history: { value: { [key: string]: any } }[];
+export class Tracer<State> {
+    state: State;
+    history: { state: State; line: number }[];
 
     constructor() {
-        this.state = {};
+        this.state = {} as State;
         this.history = [];
     }
 
-    set(key: string, value: any) {
+    reset() {
+        this.state = {} as State;
+        this.history = [];
+    }
+
+    set<T extends keyof State>(key: T, value: State[T]) {
         this.state[key] = JSON.parse(JSON.stringify(value));
         return this;
     }
 
-    get(key: string) {
+    get<T extends keyof State>(key: T): State[T] {
         return this.state[key];
     }
 
@@ -44,13 +25,14 @@ export class StateTracer implements Tracer {
         return this.history[index];
     }
 
-    update(key?: string, value?: any) {
-        console.log(arguments.length ? Array.from(arguments) : 'n/a');
-
-        if (arguments.length === 2) {
-            this.set(arguments[0], arguments[1]);
+    update(line: number, key?: string, value?: any) {
+        if (arguments.length === 3) {
+            this.set(arguments[1], arguments[2]);
         }
 
-        this.history.push({ value: JSON.parse(JSON.stringify(this.state)) });
+        this.history.push({
+            state: JSON.parse(JSON.stringify(this.state)),
+            line,
+        });
     }
 }

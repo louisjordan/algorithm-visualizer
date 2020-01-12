@@ -5,12 +5,12 @@ import { algorithmPaths } from './utilities';
 
 algorithmPaths().forEach(({ algorithmPath }) => {
     const files: string[] = fs.readdirSync(algorithmPath);
-    const index = files.find((file) => file.startsWith('index'));
-    if (!index) {
-        throw new Error(`No index file found in ${algorithmPath}`);
+    const algorithmFile = files.find((file) => file.startsWith('algorithm.'));
+    if (!algorithmFile) {
+        throw new Error(`No algorithm file found in ${algorithmPath}`);
     }
-    const indexPath = path.join(algorithmPath, index);
-    const content = fs.readFileSync(indexPath, 'utf-8');
+    const algorithmFilePath = path.join(algorithmPath, algorithmFile);
+    const content = fs.readFileSync(algorithmFilePath, 'utf-8');
     const functions = content.match(/^function.+^}/gms);
 
     if (!functions) {
