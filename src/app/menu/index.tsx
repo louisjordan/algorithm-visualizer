@@ -2,21 +2,18 @@ import React, { useState } from 'react';
 import { Link } from '@reach/router';
 import './style.css';
 
-type MenuGroup = {
-    id: string;
+export type MenuItem = {
+    key: string;
     name: string;
-    items: MenuItem[];
 };
 
-type MenuItem = {
-    id: string;
-    name: string;
-};
+export type MenuGroups = { [group: string]: MenuItem[] };
 
 type Props = {
-    groups: MenuGroup[];
+    groups: MenuGroups;
 };
 const Menu: React.FC<Props> = (props) => {
+    const { groups } = props;
     const [open, setOpen] = useState(false);
     function toggleMenu() {
         setOpen((open) => !open);
@@ -27,13 +24,13 @@ const Menu: React.FC<Props> = (props) => {
                 {open ? 'Close' : 'Open'}
             </div>
             <ul className="Menu__groups">
-                {props.groups.map((group) => (
-                    <li key={group.id}>
-                        <span className="Menu__group-title">{group.name}</span>
+                {Object.keys(groups).map((group) => (
+                    <li key={group}>
+                        <span className="Menu__group-title">{group}</span>
                         <ul className="Menu__group-items">
-                            {group.items.map((item) => (
-                                <li key={item.id} className="Menu__group-item">
-                                    <Link to={`/${item.id}`}>{item.name}</Link>
+                            {groups[group].map((item) => (
+                                <li key={item.key} className="Menu__group-item">
+                                    <Link to={`/${item.key}`}>{item.name}</Link>
                                 </li>
                             ))}
                         </ul>

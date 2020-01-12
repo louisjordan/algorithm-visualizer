@@ -1,4 +1,4 @@
-import { AlgorithmDefinition } from '../types';
+import { AlgorithmDefinition, Group } from '../types';
 import sort from './algorithm';
 import visualiser from './visualiser';
 import source from './source.json';
@@ -10,6 +10,8 @@ const insertionSort: AlgorithmDefinition<
     number[]
 > = {
     key: 'insertion-sort',
+    name: 'Insertion Sort',
+    group: Group.Sorting,
     run: (tracer, { list }) => sort(tracer, list),
     source: source.functions.join('\n\n'),
     visualiser,
