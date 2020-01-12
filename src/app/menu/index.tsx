@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from '@reach/router';
 import './style.css';
 
 type MenuGroup = {
@@ -15,10 +16,10 @@ type MenuItem = {
 type Props = {
     groups: MenuGroup[];
 };
-const Menu: React.FC<Props> = props => {
+const Menu: React.FC<Props> = (props) => {
     const [open, setOpen] = useState(false);
     function toggleMenu() {
-        setOpen(open => !open);
+        setOpen((open) => !open);
     }
     return (
         <div className={`Menu ${open && 'Menu--open'}`}>
@@ -26,13 +27,13 @@ const Menu: React.FC<Props> = props => {
                 {open ? 'Close' : 'Open'}
             </div>
             <ul className="Menu__groups">
-                {props.groups.map(group => (
+                {props.groups.map((group) => (
                     <li key={group.id}>
                         <span className="Menu__group-title">{group.name}</span>
                         <ul className="Menu__group-items">
-                            {group.items.map(item => (
+                            {group.items.map((item) => (
                                 <li key={item.id} className="Menu__group-item">
-                                    {item.name}
+                                    <Link to={`/${item.id}`}>{item.name}</Link>
                                 </li>
                             ))}
                         </ul>
