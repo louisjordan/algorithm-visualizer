@@ -1,22 +1,29 @@
 import React from 'react';
-import algorithms from 'algorithms';
+import SyntaxHighlighter from 'react-syntax-highlighter';
 import { useVisualiserState } from '../state';
 import './style.css';
 
 const Debugger: React.FC = () => {
-    const { key } = useVisualiserState();
+    const { algorithm, tracer, position } = useVisualiserState();
 
-    if (!key) {
-        return null;
-    }
-
-    const algorithm = algorithms[key];
+    const trace = tracer.at(position);
 
     return (
         <div className="Debugger">
-            <code>
-                <pre>{algorithm.source}</pre>
-            </code>
+            <SyntaxHighlighter
+                className="Debugger__code"
+                customStyle={{ background: 'none', margin: 0 }}
+                language="typescript"
+                showLineNumbers
+                startingLineNumber={1}
+                wrapLines
+                lineProps={(line: number) => ({
+                    className:
+                        trace.line === line ? 'Debugger__line--highlight' : '',
+                })}
+            >
+                {algorithm.source}
+            </SyntaxHighlighter>
         </div>
     );
 };

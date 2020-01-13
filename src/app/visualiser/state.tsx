@@ -1,46 +1,46 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { Tracer } from '../../tracer';
-import algorithms from '../../algorithms';
+import algorithms from 'algorithms';
+import { AlgorithmDefinition } from 'algorithms/types';
 
 type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
 type TracerState = {
-    key: string;
-    setKey: SetState<string>;
+    algorithm: AlgorithmDefinition<any, any, any>;
+    setAlgorithm: SetState<AlgorithmDefinition<any, any, any>>;
     tracer: Tracer<any>;
     setTracer: SetState<Tracer<any>>;
-    position: number | null;
-    setPosition: SetState<number | null>;
+    position: number;
+    setPosition: SetState<number>;
 };
-const VisualiserContext = createContext<TracerState>({
-    key: 'insertion-sort',
-    setKey: () => {},
-    tracer: new Tracer(),
-    setTracer: () => {},
-    position: null,
-    setPosition: () => {},
-});
 
 function newVisualiser(key: string) {
     const algorithm = algorithms[key];
     const tracer = new Tracer<any>(); // TODO: remove any type
-    algorithm.run(tracer, algorithm.defaultParameters);
+    algorithm.run(tracer, algorithm.defaultParameters());
     return { algorithm, tracer };
 }
 
 const initial = newVisualiser('insertion-sort');
 
+const VisualiserContext = createContext<TracerState>({
+    algorithm: initial.algorithm,
+    setAlgorithm: () => {},
+    tracer: initial.tracer,
+    setTracer: () => {},
+    position: 0,
+    setPosition: () => {},
+});
+
 export const VisualiserContextProvider: React.FC<{ algorithm: string }> = (
     props
 ) => {
-    const [key, setKey] = useState(initial.algorithm.key);
+    const [algorithm, setAlgorithm] = useState(initial.algorithm);
     const [tracer, setTracer] = useState(initial.tracer);
-    const [position, setPosition] = useState<number | null>(null);
+    const [position, setPosition] = useState(0);
 
     useEffect(() => {
         const { algorithm, tracer } = newVisualiser(props.algorithm);
-        algorithm.run(tracer, algorithm.defaultParameters);
-
-        setKey(props.algorithm);
+        setAlgorithm(algorithm);
         setTracer(tracer);
         setPosition(0);
     }, [props.algorithm]);
@@ -48,8 +48,8 @@ export const VisualiserContextProvider: React.FC<{ algorithm: string }> = (
     return (
         <VisualiserContext.Provider
             value={{
-                key,
-                setKey,
+                algorithm,
+                setAlgorithm,
                 tracer,
                 setTracer,
                 position,

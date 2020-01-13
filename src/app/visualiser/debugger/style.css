@@ -1,2 +1,19 @@
 .Debugger {
+    flex: 1 0;
+    margin: 2em 3em 1em 2em;
+}
+
+.Debugger__code {
+    background: none;
+}
+
+.Debugger__line {
+    margin: 0;
+    line-height: 1.5em;
+    min-height: 1.5em;
+}
+
+.Debugger__line--highlight {
+    display: block;
+    background: rgba(214, 214, 214, 0.5);
 }

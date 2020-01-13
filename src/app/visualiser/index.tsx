@@ -3,6 +3,7 @@ import { RouteComponentProps } from '@reach/router';
 import VisualiserDisplay from './display';
 import Debugger from './debugger';
 import Controls from './controls';
+import Docs from './docs';
 import { VisualiserContextProvider } from './state';
 
 import './style.css';
@@ -27,7 +28,9 @@ const VisualiserLayout: React.FC<Props> = (props) => {
                     <div className="VisualiserLayout__code">
                         <Debugger />
                     </div>
-                    <div className="VisualiserLayout__documentation">Docs</div>
+                    <div className="VisualiserLayout__documentation">
+                        <Docs />
+                    </div>
                 </div>
             </div>
         </VisualiserContextProvider>

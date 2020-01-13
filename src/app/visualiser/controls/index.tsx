@@ -5,10 +5,6 @@ import './style.css';
 const Visualiser: React.FC = () => {
     const { next, prev, position, tracer } = useVisualiserState();
 
-    if (position === null) {
-        return null;
-    }
-
     return (
         <div className="Controls">
             <button onClick={prev}>Prev</button>

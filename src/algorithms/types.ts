@@ -10,8 +10,9 @@ export type AlgorithmDefinition<TracerState, Parameters, Output> = {
     name: string;
     group: Group;
     source: string;
+    doc: string;
     run(tracer: Tracer<TracerState>, parameters: Parameters): Output;
-    defaultParameters: Parameters;
+    defaultParameters: () => Parameters;
     visualiser: React.FC<{
         tracer: Tracer<TracerState>;
         position: number;

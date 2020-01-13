@@ -20,7 +20,7 @@ const InsertionSortVisualiser: React.FC<Props> = (props) => {
 
     return (
         <ArrayRenderer
-            elements={elements}
+            elements={state.list}
             pointer={state.pointer}
             position={state.position}
         />
