@@ -13,7 +13,7 @@ export class Tracer<State> {
     }
 
     set<T extends keyof State>(key: T, value: State[T]) {
-        this.state[key] = JSON.parse(JSON.stringify(value));
+        this.state[key] = value;
         return this;
     }
 
@@ -25,11 +25,7 @@ export class Tracer<State> {
         return this.history[index];
     }
 
-    update(line: number, key?: string, value?: any) {
-        if (arguments.length === 3) {
-            this.set(arguments[1], arguments[2]);
-        }
-
+    update(line: number) {
         this.history.push({
             state: JSON.parse(JSON.stringify(this.state)),
             line,
