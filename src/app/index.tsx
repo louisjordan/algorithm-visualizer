@@ -1,31 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Router, navigate } from '@reach/router';
-import algorithms from 'algorithms';
-import Menu, { MenuGroups } from './menu';
+import { groups } from 'algorithms';
+import { Button, Menu } from 'app/components';
 import Visualiser from './visualiser';
 
-import './style.css';
+import { AppContainer } from './style';
 import './reset.css';
 
-const menuGroups = Object.keys(algorithms).reduce((groups: MenuGroups, key) => {
-    const { name, group } = algorithms[key];
-    groups[group] = groups[group] || [];
-    groups[group].push({ key, name });
-    return groups;
-}, {});
-
 const App: React.FC = () => {
+    const [theme, setTheme] = useState('dark');
+    const toggleTheme = () =>
+        setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+
     if (window.location.pathname === '' || window.location.pathname === '/') {
         navigate('/insertion-sort');
     }
 
     return (
-        <div className="App">
-            <Menu groups={menuGroups} />
+        <AppContainer>
+            <Menu groups={groups} />
+            <Button
+                onClick={toggleTheme}
+                style={{
+                    position: 'absolute',
+                    right: '1em',
+                    top: '1em',
+                    zIndex: 100,
+                }}
+            >
+                {theme}
+            </Button>
             <Router component={({ children }) => <>{children}</>}>
                 <Visualiser path="/:algorithm" />
             </Router>
-        </div>
+        </AppContainer>
     );
 };
 

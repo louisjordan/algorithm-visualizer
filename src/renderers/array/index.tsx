@@ -1,23 +1,24 @@
 import React from 'react';
-import './style.css';
+
+import { Array, ArrayElement, ArrayPointer } from './style';
 
 type Props = {
     elements: Array<React.ReactNode>;
     pointer?: number | null;
     position?: number | null;
 };
-const ArrayRenderer: React.FC<Props> = props => {
+const ArrayRenderer: React.FC<Props> = (props) => {
     const { elements, pointer, position } = props;
     return (
-        <ol className="ArrayRenderer">
+        <Array>
             {elements.map((value, index) => (
-                <li className="ArrayRenderer__element">
-                    {pointer === index && <span className="ArrayRenderer__pointer">↓</span>}
-                    {position === index && <span className="ArrayRenderer__pointer">{value}</span>}
+                <ArrayElement>
+                    {pointer === index && <ArrayPointer>↓</ArrayPointer>}
+                    {position === index && <ArrayPointer>{value}</ArrayPointer>}
                     {position !== index && value}
-                </li>
+                </ArrayElement>
             ))}
-        </ol>
+        </Array>
     );
 };
 
