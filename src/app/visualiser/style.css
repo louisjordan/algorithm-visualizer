@@ -17,6 +17,7 @@
     display: flex;
     flex-flow: column nowrap;
     align-items: stretch;
+    justify-content: center;
 }
 
 .VisualiserLayout__controls {
@@ -29,7 +30,8 @@
 .VisualiserLayout__documentation {
     flex: 1 0;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    min-height: 50%;
 }
 
 @media screen and (max-width: 850px) {

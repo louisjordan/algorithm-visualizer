@@ -38,6 +38,7 @@ function insertionSort(tracer: InsertionSortTracer, list: number[]) {
         .set('position', null)
         .set('pointer', null)
         .update(22);
+
     return list;
 }
 

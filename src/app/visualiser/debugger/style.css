@@ -1,19 +1,38 @@
 .Debugger {
     flex: 1 0;
-    margin: 2em 3em 1em 2em;
+    margin: 1em;
+    height: 100%;
 }
 
 .Debugger__code {
     background: none;
+    cursor: text;
+    height: 100%;
+    padding: 0;
+    display: block;
+    overflow: auto;
+    background: none;
+    color: rgb(197, 200, 198);
+    padding: 0.5em;
+    margin: 0px;
+}
+
+.Debugger__lineContainer {
+    margin: 0;
+    line-height: 1.5em;
+    display: block;
 }
 
 .Debugger__line {
     margin: 0;
     line-height: 1.5em;
-    min-height: 1.5em;
+    display: block;
+}
+
+.Debugger__line:hover {
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .Debugger__line--highlight {
-    display: block;
-    background: rgba(214, 214, 214, 0.5);
+    background: rgba(0, 0, 0, 0.2);
 }
