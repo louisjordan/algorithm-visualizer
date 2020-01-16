@@ -57,6 +57,14 @@ export const MenuLink = styled(Link)`
     display: block;
     transition: 166ms ease-in-out;
 
+    &:link {
+        color: #bfbfbf;
+    }
+
+    &:visited {
+        color: #bfbfbf;
+    }
+
     &:hover {
         background: #2e2e2e;
     }

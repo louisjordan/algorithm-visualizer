@@ -20,18 +20,23 @@
     justify-content: center;
 }
 
-.VisualiserLayout__controls {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
-
 .VisualiserLayout__code,
 .VisualiserLayout__documentation {
     flex: 1 0;
     display: flex;
     align-items: flex-start;
     min-height: 50%;
+    padding: 1em;
+}
+
+.VisualiserLayout__documentation {
+    padding-top: 0;
+}
+
+.VisualiserLayout__controls {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 @media screen and (max-width: 850px) {
