@@ -19,6 +19,7 @@
         "react-scripts": "3.3.0",
         "react-syntax-highlighter": "^12.2.1",
         "styled-components": "^5.0.0",
+        "svg-inline-loader": "^0.8.0",
         "typescript": "~3.7.2"
     },
     "scripts": {
