@@ -13,12 +13,14 @@ export const MenuContainer = styled.div`
     );
     transition: all 300ms ease-in-out;
     background: #1f1f1f;
+    min-width: 10em;
 `;
 
 type MenuToggleProps = {};
 export const MenuToggle = styled.div`
     position: absolute;
     right: -3em;
+    top: 1em;
 `;
 
 type MenuGroupListProps = {};

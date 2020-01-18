@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MenuIcon, CloseIcon } from 'app/components/icons';
 import {
     MenuContainer,
     MenuToggle,
@@ -9,7 +10,6 @@ import {
     MenuGroupTitle,
     MenuLink,
 } from './style';
-import { Link } from '@reach/router';
 
 type Props = {
     groups: {
@@ -21,14 +21,14 @@ type Props = {
 };
 export const Menu: React.FC<Props> = (props) => {
     const { groups } = props;
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     function toggleMenu() {
         setOpen((open) => !open);
     }
     return (
         <MenuContainer open={open}>
             <MenuToggle onClick={toggleMenu}>
-                {open ? 'Close' : 'Open'}
+                {open ? <CloseIcon clickable /> : <MenuIcon clickable />}
             </MenuToggle>
             <MenuGroupList>
                 {Object.keys(groups).map((group) => (
