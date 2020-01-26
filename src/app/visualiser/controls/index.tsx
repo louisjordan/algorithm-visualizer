@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useVisualiserState } from '../state';
+import { useVisualiserState, PlaybackSpeed } from '../state';
 import {
     NextIcon,
     PreviousIcon,
@@ -14,6 +14,8 @@ import {
     ControlSlider,
     ControlButton,
     ControlPosition,
+    ControlSpeed,
+    ControlSpeedOption,
 } from './style';
 
 const Controls: React.FC = () => {
@@ -28,6 +30,8 @@ const Controls: React.FC = () => {
         playing,
         play,
         pause,
+        setSpeed,
+        speed,
     } = useVisualiserState();
 
     return (
@@ -54,6 +58,26 @@ const Controls: React.FC = () => {
                 />
                 <ControlButton icon={NextIcon} onClick={stepForward} />
                 <ControlButton icon={SkipForwardIcon} onClick={skipToEnd} />
+                <ControlSpeed>
+                    <ControlSpeedOption
+                        active={speed === PlaybackSpeed.FAST}
+                        onClick={() => setSpeed(PlaybackSpeed.FAST)}
+                    >
+                        2x
+                    </ControlSpeedOption>
+                    <ControlSpeedOption
+                        active={speed === PlaybackSpeed.NORMAL}
+                        onClick={() => setSpeed(PlaybackSpeed.NORMAL)}
+                    >
+                        1x
+                    </ControlSpeedOption>
+                    <ControlSpeedOption
+                        active={speed === PlaybackSpeed.SLOW}
+                        onClick={() => setSpeed(PlaybackSpeed.SLOW)}
+                    >
+                        0.5x
+                    </ControlSpeedOption>
+                </ControlSpeed>
             </ControlsGroup>
         </ControlsContainer>
     );

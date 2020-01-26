@@ -12,7 +12,21 @@ type TracerState = {
     setTracer: SetState<Tracer<any>>;
     position: number;
     setPosition: SetState<number>;
+    stepForward: () => void;
+    stepBackward: () => void;
+    skipToStart: () => void;
+    skipToEnd: () => void;
+    playing: boolean;
+    play: () => void;
+    pause: () => void;
+    setSpeed: (speed: PlaybackSpeed) => void;
+    speed: PlaybackSpeed;
 };
+export enum PlaybackSpeed {
+    SLOW = 2000,
+    NORMAL = 1000,
+    FAST = 500,
+}
 
 function newVisualiser(key: string) {
     const algorithm = algorithms[key];
@@ -30,6 +44,15 @@ const VisualiserContext = createContext<TracerState>({
     setTracer: () => {},
     position: 0,
     setPosition: () => {},
+    stepForward: () => {},
+    stepBackward: () => {},
+    skipToStart: () => {},
+    skipToEnd: () => {},
+    playing: false,
+    play: () => {},
+    pause: () => {},
+    setSpeed: () => {},
+    speed: PlaybackSpeed.NORMAL,
 });
 
 export const VisualiserContextProvider: React.FC<{ algorithm: string }> = (
@@ -46,6 +69,30 @@ export const VisualiserContextProvider: React.FC<{ algorithm: string }> = (
         setPosition(0);
     }, [props.algorithm]);
 
+    const skipToStart = () => setPosition(0);
+    const skipToEnd = () => setPosition(tracer.history.length - 1);
+    const stepForward = () =>
+        setPosition((position) => {
+            if (tracer.at(position + 1)) {
+                if (!tracer.at(position + 2)) {
+                    pause();
+                }
+                return position + 1;
+            }
+
+            return position;
+        });
+    const stepBackward = () =>
+        setPosition((position) => (position > 0 ? position - 1 : position));
+
+    const [speed, setSpeed] = useState(PlaybackSpeed.NORMAL);
+    const [delay, setDelay] = useState<number | null>(null);
+
+    useInterval(stepForward, delay);
+
+    const play = () => setDelay(speed);
+    const pause = () => setDelay(null);
+
     return (
         <VisualiserContext.Provider
             value={{
@@ -55,6 +102,15 @@ export const VisualiserContextProvider: React.FC<{ algorithm: string }> = (
                 setTracer,
                 position,
                 setPosition,
+                stepForward,
+                stepBackward,
+                skipToStart,
+                skipToEnd,
+                playing: delay !== null,
+                play,
+                pause,
+                setSpeed,
+                speed,
             }}
         >
             {props.children}
@@ -62,43 +118,12 @@ export const VisualiserContextProvider: React.FC<{ algorithm: string }> = (
     );
 };
 
-const delaySpeeds = {
-    slow: 1000,
-    normal: 500,
-    fast: 250,
-};
-
 export function useVisualiserState() {
     const state = useContext(VisualiserContext);
     const { tracer, setPosition } = state;
 
-    // TOOD: improve playback functionality
-
-    const skipToStart = () => setPosition(0);
-    const skipToEnd = () => setPosition(tracer.history.length - 1);
-    const stepForward = () =>
-        setPosition((position) =>
-            tracer.at(position + 1) ? position + 1 : position
-        );
-    const stepBackward = () =>
-        setPosition((position) => (position > 0 ? position - 1 : position));
-
-    const [delay, setDelay] = useState<number | null>(2000);
-
-    useInterval(() => stepForward(), delay);
-
-    const play = () => setDelay(delaySpeeds.normal);
-    const pause = () => setDelay(null);
-
     return {
-        stepForward,
-        stepBackward,
-        skipToStart,
-        skipToEnd,
         skipTo: setPosition,
-        playing: delay !== null,
-        play,
-        pause,
         ...state,
     };
 }
