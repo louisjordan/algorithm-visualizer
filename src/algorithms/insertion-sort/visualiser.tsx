@@ -10,19 +10,12 @@ const InsertionSortVisualiser: React.FC<Props> = (props) => {
     const { tracer, position } = props;
     const { state } = tracer.at(position);
 
-    const elements = state.list.map((item, index) => {
-        if (state.position === index) {
-            return null;
-        }
-
-        return item;
-    });
-
     return (
         <ArrayRenderer
             elements={state.list}
             pointer={state.pointer}
             position={state.position}
+            positionValue={state.value}
         />
     );
 };

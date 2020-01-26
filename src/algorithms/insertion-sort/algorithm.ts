@@ -14,6 +14,7 @@ function insertionSort(tracer: InsertionSortTracer, list: number[]) {
 
     while (position < list.length) {
         let x = list[position];
+        tracer.set('value', x);
 
         pointer = position - 1;
         tracer.set('pointer', pointer).update(10);
@@ -24,14 +25,18 @@ function insertionSort(tracer: InsertionSortTracer, list: number[]) {
             tracer
                 .set('list', list)
                 .set('pointer', pointer)
+                .set('position', pointer + 1)
                 .update(14);
         }
 
         list[pointer + 1] = x;
-        tracer.set('list', list).update(17);
+        tracer.set('list', list);
 
         position++;
-        tracer.set('position', position).update(19);
+        tracer
+            .set('position', position)
+            .set('value', list[position])
+            .update(19);
     }
 
     tracer
