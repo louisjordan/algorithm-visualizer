@@ -6,13 +6,17 @@ export const Array = styled.ol`
     padding: 0.5em;
 `;
 
+type ArrayElementProps = {
+    highlight: boolean;
+};
 export const ArrayElement = styled.li`
     font-size: 1em;
     text-transform: uppercase;
     letter-spacing: 0.066em;
     width: 2em;
     height: 2em;
-    background: #404040;
+    background: ${(props: ArrayElementProps) =>
+        props.highlight ? '#648266' : '#404040'};
     color: #bfbfbf;
     position: relative;
     display: flex;

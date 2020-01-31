@@ -18,7 +18,7 @@ const selectionSort: AlgorithmDefinition<
     doc,
     visualiser,
     run: (tracer, { list }) => sort(tracer, list),
-    defaultParameters: () => ({ list: [3, 5, 2, 6, 7] }),
+    defaultParameters: () => ({ list: [8, 5, 3, 9, 1, 2, 6, 7] }),
 };
 
 export default selectionSort;

@@ -4,16 +4,17 @@ import { Array, ArrayElement, ArrayPointer } from './style';
 
 type Props = {
     elements: Array<React.ReactNode>;
-    pointer: number | null;
-    position: number | null;
+    pointer?: number | null;
+    position?: number | null;
     positionValue?: number | null;
+    highlight?: number | null;
 };
 const ArrayRenderer: React.FC<Props> = (props) => {
     const { elements, pointer, position, positionValue = null } = props;
     return (
         <Array>
             {elements.map((value, index) => (
-                <ArrayElement>
+                <ArrayElement highlight={props.highlight === index}>
                     {pointer === index && <ArrayPointer>↓</ArrayPointer>}
                     {position === index && (
                         <ArrayPointer>

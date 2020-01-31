@@ -21,6 +21,7 @@ const InsertionSortVisualiser: React.FC<Props> = (props) => {
             elements={state.list}
             pointer={state.pointer}
             position={state.position}
+            highlight={state.smallest}
         />
     );
 };
