@@ -4,7 +4,3 @@ export const AppContainer = styled.div`
     height: 100%;
     background: #242424;
 `;
-
-export const RouteContainer = styled.div`
-    height: 100%;
-`;
