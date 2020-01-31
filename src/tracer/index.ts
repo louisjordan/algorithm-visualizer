@@ -1,6 +1,10 @@
+import { deepFreeze } from 'utilities';
+
+type Trace<State> = { state: State; line: number };
+
 export class Tracer<State> {
     state: State;
-    history: { state: State; line: number }[];
+    history: Trace<State>[];
 
     constructor() {
         this.state = {} as State;
@@ -12,7 +16,7 @@ export class Tracer<State> {
         this.history = [];
     }
 
-    set<T extends keyof State>(key: T, value: State[T]) {
+    assign<T extends keyof State>(key: T, value: State[T]) {
         this.state[key] = value;
         return this;
     }
@@ -21,13 +25,17 @@ export class Tracer<State> {
         return this.state[key];
     }
 
-    at(index: number) {
-        return this.history[index];
+    at(index: number): Trace<State> | null {
+        if (index >= 0) {
+            return this.history[index] || null;
+        } else {
+            return this.history[this.history.length + index] || null;
+        }
     }
 
-    update(line: number) {
+    break(line: number) {
         this.history.push({
-            state: JSON.parse(JSON.stringify(this.state)),
+            state: deepFreeze(JSON.parse(JSON.stringify(this.state))),
             line,
         });
     }

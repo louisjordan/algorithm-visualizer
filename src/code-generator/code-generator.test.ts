@@ -53,10 +53,10 @@ function algorithm(x: number, y: number) {
             const source = `
 function algorithm() {
     let x = 42;
-    tracer.set('x', x);
+    tracer.assign('x', x);
 
     let y = 1337;
-    tracer.set('y', y);
+    tracer.assign('y', y);
 }
 `;
 
@@ -75,8 +75,8 @@ function algorithm() {
 function algorithm() {
     let x = 42;
     let y = 1337;
-    tracer.set('x', x);
-    tracer.set('y', y);
+    tracer.assign('x', x);
+    tracer.assign('y', y);
 }
 `;
 
@@ -95,8 +95,8 @@ function algorithm() {
     let x = 42;
     let y = 1337;
     tracer
-        .set('x', x)
-        .set('y', y);
+        .assign('x', x)
+        .assign('y', y);
 }
 `;
 
