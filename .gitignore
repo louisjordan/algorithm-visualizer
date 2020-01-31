@@ -2,6 +2,7 @@
 
 # dev
 /_ignore
+deploy.sh
 
 # dependencies
 /node_modules
