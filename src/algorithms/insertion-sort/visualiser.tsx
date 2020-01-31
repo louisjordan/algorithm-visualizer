@@ -8,7 +8,13 @@ type Props = {
 };
 const InsertionSortVisualiser: React.FC<Props> = (props) => {
     const { tracer, position } = props;
-    const { state } = tracer.at(position);
+    const trace = tracer.at(position);
+
+    if (trace === null) {
+        return null;
+    }
+
+    const { state } = trace;
 
     return (
         <ArrayRenderer

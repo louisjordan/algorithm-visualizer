@@ -5,6 +5,6 @@ export const AppContainer = styled.div`
     background: #242424;
 `;
 
-export const AppRoute = styled.div`
+export const RouteContainer = styled.div`
     height: 100%;
 `;

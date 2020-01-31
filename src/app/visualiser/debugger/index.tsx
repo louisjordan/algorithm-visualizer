@@ -9,7 +9,7 @@ import './style.css';
 
 const Debugger: React.FC = () => {
     const { algorithm, tracer, position } = useVisualiserState();
-    const trace = tracer.at(position);
+    const trace = tracer.at(position) || { line: null };
     const containerRef = useRef<HTMLElement | null>(null);
     const lineRef = useRef<HTMLElement | null>(null);
 
@@ -29,6 +29,10 @@ const Debugger: React.FC = () => {
             }
         }
     }, [trace.line]);
+
+    if (trace === null) {
+        return null;
+    }
 
     return (
         <div className="Debugger">
