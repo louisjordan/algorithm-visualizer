@@ -1,4 +1,4 @@
-import { isObject, deepFreeze } from './';
+import { isObject, deepFreeze, uuid } from './';
 
 describe('Utilities', () => {
     describe('predicates', () => {
@@ -50,6 +50,36 @@ describe('Utilities', () => {
             expect(() => (array[0][0] = 'throw')).toThrow();
             expect(() => (array[0][0] = 'new value')).toThrow();
             expect(() => delete array[0][0]).toThrow();
+        });
+    });
+
+    describe('uuid', () => {
+        it('should generate an id of the specified length', () => {
+            expect(uuid(1).length).toBe(1);
+            expect(uuid(10).length).toBe(10);
+            expect(uuid(432).length).toBe(432);
+            expect(uuid(9999).length).toBe(9999);
+
+            // random integer test
+            const randomLength = Math.floor(Math.random() * 1000000); // random between 1 - 999,999
+            expect(uuid(randomLength).length).toBe(randomLength);
+        });
+
+        it('should generate a unique id on each call', () => {
+            const ids = new Array(1000).fill(undefined).map(() => uuid());
+            const uniqueIds = [...new Set(ids)]; // remove duplicates (of which there should be none)
+
+            expect(ids.length).toBe(uniqueIds.length);
+        });
+
+        it('should fail if length is less than 1', () => {
+            expect(() => uuid(0)).toThrow();
+            expect(() => uuid(-1)).toThrow();
+            expect(() => uuid(-99)).toThrow();
+        });
+
+        it('should fail if length is unreachable (Infinity)', () => {
+            expect(() => uuid(Infinity)).toThrow();
         });
     });
 });
