@@ -5,34 +5,36 @@ export default class GraphNode<T> {
     readonly key: string;
     value: T;
 
-    private edges: GraphEdge<T>[];
+    private edges: { [key: string]: GraphEdge<T> };
 
     constructor(value: T) {
         this.key = uuid();
         this.value = value;
-        this.edges = [];
+        this.edges = {};
     }
 
     addEdge(edge: GraphEdge<T>): this {
-        this.edges.push(edge);
+        this.edges[edge.key] = edge;
         return this;
     }
 
     removeEdge(edge: GraphEdge<T>): this {
-        this.edges = this.edges.filter((e) => e.key !== edge.key);
+        delete this.edges[edge.key];
         return this;
     }
 
-    findEdge(edge: GraphEdge<T>): GraphEdge<T> | void {
-        return this.edges.find((e) => e.key === edge.key);
+    hasEdge(edge: GraphEdge<T>): boolean {
+        return !!this.edges[edge.key];
     }
 
-    hasEdge(edge: GraphEdge<T>): boolean {
-        return !!this.findEdge(edge);
+    findConnectingEdge(node: GraphNode<T>): GraphEdge<T> | void {
+        return Object.values(this.edges).find(
+            (edge) => edge.from === node || edge.to === node
+        );
     }
 
     neighbours(): GraphNode<T>[] {
-        return this.edges.map((edge) => {
+        return Object.values(this.edges).map((edge) => {
             if (edge.from === this) {
                 return edge.to;
             } else {
