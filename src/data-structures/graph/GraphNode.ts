@@ -1,14 +1,22 @@
 import { uuid } from 'utilities';
-import GraphEdge from 'data-structures/graph/GraphEdge';
+import GraphEdge from './GraphEdge';
+import { Serializable } from '../interfaces';
 
-export default class GraphNode<T> {
+export type SerializedGraphNode<T> = {
+    key: string;
+    value: T;
+    edges: string[];
+};
+
+export default class GraphNode<T>
+    implements Serializable<SerializedGraphNode<T>> {
     readonly key: string;
     value: T;
 
     private edges: { [key: string]: GraphEdge<T> };
 
-    constructor(value: T) {
-        this.key = uuid();
+    constructor(value: T, key?: string) {
+        this.key = key || uuid();
         this.value = value;
         this.edges = {};
     }
@@ -41,5 +49,13 @@ export default class GraphNode<T> {
                 return edge.from;
             }
         });
+    }
+
+    serialize() {
+        return {
+            key: this.key,
+            value: this.value,
+            edges: Object.keys(this.edges),
+        };
     }
 }

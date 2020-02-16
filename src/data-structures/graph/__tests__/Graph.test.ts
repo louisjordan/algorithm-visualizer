@@ -191,4 +191,114 @@ describe('Graph', () => {
             expect(graph.findEdgeByNodes(nodes[1], nodes[2])).toBe(undefined);
         });
     });
+
+    describe('serialize', () => {
+        it('should convert a Graph instance into a plain object', () => {
+            const graph = new Graph();
+            const nodes = [
+                new GraphNode(0),
+                new GraphNode(1),
+                new GraphNode(2),
+            ];
+            const edges = [
+                new GraphEdge(nodes[0], nodes[1]),
+                new GraphEdge(nodes[0], nodes[2]),
+            ];
+
+            edges.forEach((edge) => graph.addEdge(edge));
+
+            const serialized = {
+                directed: false,
+                nodes: [
+                    {
+                        key: nodes[0].key,
+                        value: nodes[0].value,
+                        edges: [edges[0].key, edges[1].key],
+                    },
+                    {
+                        key: nodes[1].key,
+                        value: nodes[1].value,
+                        edges: [edges[0].key],
+                    },
+                    {
+                        key: nodes[2].key,
+                        value: nodes[2].value,
+                        edges: [edges[1].key],
+                    },
+                ],
+                edges: [
+                    {
+                        key: edges[0].key,
+                        weight: 1,
+                        from: nodes[0].key,
+                        to: nodes[1].key,
+                    },
+                    {
+                        key: edges[1].key,
+                        weight: 1,
+                        from: nodes[0].key,
+                        to: nodes[2].key,
+                    },
+                ],
+            };
+
+            expect(graph.serialize()).toEqual(serialized);
+        });
+
+        it('should create a stringifyable serialization', () => {
+            const graph = new Graph();
+            const nodes = [
+                new GraphNode(0),
+                new GraphNode(1),
+                new GraphNode(2),
+            ];
+            const edges = [
+                new GraphEdge(nodes[0], nodes[1]),
+                new GraphEdge(nodes[0], nodes[2]),
+            ];
+
+            edges.forEach((edge) => graph.addEdge(edge));
+
+            expect(() => JSON.stringify(graph.serialize())).not.toThrow();
+        });
+    });
+
+    describe('deserialize', () => {
+        it('should recreate a seralized graph', () => {
+            const graph = new Graph();
+            const nodes = [
+                new GraphNode(0),
+                new GraphNode(1),
+                new GraphNode(2),
+            ];
+            const edges = [
+                new GraphEdge(nodes[0], nodes[1]),
+                new GraphEdge(nodes[0], nodes[2]),
+            ];
+
+            edges.forEach((edge) => graph.addEdge(edge));
+
+            const serialized = graph.serialize();
+            const deserialized = Graph.deserialize(serialized);
+
+            // check instance variables
+            expect(deserialized.directed).toBe(false);
+
+            // check nodes
+            expect(deserialized.getNodes().length).toBe(3);
+            nodes.forEach((node) => {
+                expect(deserialized.findNodeByKey(node.key)).not.toBe(
+                    undefined
+                );
+            });
+
+            // check edges
+            expect(deserialized.getEdges().length).toBe(2);
+            edges.forEach((edge) => {
+                expect(deserialized.findEdgeByKey(edge.key)).not.toBe(
+                    undefined
+                );
+            });
+        });
+    });
 });

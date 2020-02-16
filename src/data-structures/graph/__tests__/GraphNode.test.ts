@@ -94,4 +94,29 @@ describe('GraphNode', () => {
             );
         });
     });
+
+    describe('serialize', () => {
+        it('should convert a GraphNode instance into a plain object', () => {
+            const nodes = [new GraphNode(0), new GraphNode(1)];
+            const edge = new GraphEdge(nodes[0], nodes[1]);
+
+            nodes[0].addEdge(edge);
+
+            const serialized = {
+                key: nodes[0].key,
+                value: 0,
+                edges: [edge.key],
+            };
+
+            expect(nodes[0].serialize()).toEqual(serialized);
+        });
+
+        it('should create a stringifyable serialization', () => {
+            const nodes = [new GraphNode(0), new GraphNode(1)];
+            const edge = new GraphEdge(nodes[0], nodes[1]);
+            nodes[0].addEdge(edge);
+
+            expect(() => JSON.stringify(nodes[0].serialize())).not.toThrow();
+        });
+    });
 });

@@ -1,7 +1,14 @@
-import GraphEdge from './GraphEdge';
-import GraphNode from './GraphNode';
+import GraphEdge, { SerializedGraphEdge } from './GraphEdge';
+import GraphNode, { SerializedGraphNode } from './GraphNode';
+import { Serializable } from '../interfaces';
 
-export default class Graph<T> {
+export type SerializedGraph<T> = {
+    directed: boolean;
+    nodes: SerializedGraphNode<T>[];
+    edges: SerializedGraphEdge[];
+};
+
+export default class Graph<T> implements Serializable<SerializedGraph<T>> {
     private nodes: { [key: string]: GraphNode<T> };
     private edges: { [key: string]: GraphEdge<T> };
 
@@ -73,6 +80,10 @@ export default class Graph<T> {
         return this.nodes[key];
     }
 
+    findEdgeByKey(key: string): GraphEdge<T> | void {
+        return this.edges[key];
+    }
+
     findEdgeByNodes(from: GraphNode<T>, to: GraphNode<T>): GraphEdge<T> | void {
         const node = this.findNodeByKey(from.key);
 
@@ -81,5 +92,43 @@ export default class Graph<T> {
         }
 
         return node.findConnectingEdge(to);
+    }
+
+    serialize() {
+        return {
+            directed: this.directed,
+            edges: this.getEdges().map((edge) => edge.serialize()),
+            nodes: this.getNodes().map((node) => node.serialize()),
+        };
+    }
+
+    static deserialize<T>(serialized: SerializedGraph<T>): Graph<T> {
+        const nodes = serialized.nodes.map(
+            (node) => new GraphNode(node.value, node.key)
+        );
+        const edges = serialized.edges.map((edge) => {
+            const from = nodes.find((node) => node.key === edge.from);
+            const to = nodes.find((node) => node.key === edge.to);
+
+            if (!from || !to) {
+                const errors = [];
+                if (!from) {
+                    errors.push(`Cannot find from node ${edge.from}`);
+                }
+                if (!to) {
+                    errors.push(`Cannot find to node ${edge.to}`);
+                }
+                throw new Error(errors.join('\n'));
+            }
+
+            return new GraphEdge(from, to, edge.weight, edge.key);
+        });
+
+        const graph = new Graph<T>(serialized.directed);
+
+        // adding edges to graph will also add nodes to graph and edge
+        edges.forEach((edge) => graph.addEdge(edge));
+
+        return graph;
     }
 }
