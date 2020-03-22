@@ -1,10 +1,17 @@
-import insertionSort from '../algorithm';
+import graphDepthFirstSearch from '../';
+import depthFirstSearchRecursive from '../algorithm';
 import { Tracer } from 'tracer';
-import { InsertionSortTracerState } from '../types';
+import { GraphDFSTracerState } from '../types';
 
-describe('InsertionSort', () => {
-    it('should sort an array of integers', () => {
-        const tracer = new Tracer<InsertionSortTracerState>();
-        expect(insertionSort(tracer, [6, 2, 8, 9, 3])).toEqual([2, 3, 6, 8, 9]);
+describe('Graph Depth-First Search', () => {
+    it('should visit all nodes in the graph', () => {
+        const tracer = new Tracer<GraphDFSTracerState>();
+        const { graph, start } = graphDepthFirstSearch.defaultParameters();
+        const result = depthFirstSearchRecursive(
+            tracer,
+            graph,
+            start
+        ).serialize();
+        expect(result.nodes.every((node) => node.value.visited)).toEqual(true);
     });
 });
