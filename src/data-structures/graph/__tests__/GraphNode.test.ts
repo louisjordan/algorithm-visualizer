@@ -1,5 +1,5 @@
-import GraphNode from '../GraphNode';
-import GraphEdge from 'data-structures/graph/GraphEdge';
+import { GraphNode } from '../GraphNode';
+import { GraphEdge } from 'data-structures/graph/GraphEdge';
 
 describe('GraphNode', () => {
     describe('instance variables', () => {

@@ -1,6 +1,6 @@
-import Graph from '../Graph';
-import GraphNode from '../GraphNode';
-import GraphEdge from 'data-structures/graph/GraphEdge';
+import { Graph } from '../Graph';
+import { GraphNode } from '../GraphNode';
+import { GraphEdge } from 'data-structures/graph/GraphEdge';
 
 describe('Graph', () => {
     describe('instance variables', () => {
@@ -17,7 +17,7 @@ describe('Graph', () => {
 
     describe('addNode', () => {
         it('should add a node to the graph', () => {
-            const graph = new Graph();
+            const graph = new Graph<number>();
             const node = new GraphNode(0);
 
             graph.addNode(node);
@@ -28,7 +28,7 @@ describe('Graph', () => {
 
     describe('addEdge', () => {
         it('should add an edge to the graph', () => {
-            const graph = new Graph();
+            const graph = new Graph<number>();
             const nodes = [new GraphNode(0), new GraphNode(1)];
             const edge = new GraphEdge(nodes[0], nodes[1]);
 
@@ -38,7 +38,7 @@ describe('Graph', () => {
         });
 
         it('should add nodes connected by edge to the graph', () => {
-            const graph = new Graph();
+            const graph = new Graph<number>();
             const nodes = [new GraphNode(0), new GraphNode(1)];
             const edge = new GraphEdge(nodes[0], nodes[1]);
 
@@ -49,7 +49,7 @@ describe('Graph', () => {
         });
 
         it('should add edge to both nodes connected by edge in undirected graph', () => {
-            const graph = new Graph();
+            const graph = new Graph<number>();
             const nodes = [new GraphNode(0), new GraphNode(1)];
             const edge = new GraphEdge(nodes[0], nodes[1]);
 
@@ -60,7 +60,7 @@ describe('Graph', () => {
         });
 
         it('should add edge to from node connected by edge in directed graph', () => {
-            const graph = new Graph(true);
+            const graph = new Graph<number>(true);
             const nodes = [new GraphNode(0), new GraphNode(1)];
             const edge = new GraphEdge(nodes[0], nodes[1]);
 
@@ -73,7 +73,7 @@ describe('Graph', () => {
 
     describe('removeEdge', () => {
         it('should remove the edge from the graph', () => {
-            const graph = new Graph();
+            const graph = new Graph<number>();
             const nodes = [new GraphNode(0), new GraphNode(1)];
             const edge = new GraphEdge(nodes[0], nodes[1]);
             graph.addEdge(edge);
@@ -84,7 +84,7 @@ describe('Graph', () => {
         });
 
         it('should remove edge from nodes connected by edge', () => {
-            const graph = new Graph();
+            const graph = new Graph<number>();
             const nodes = [new GraphNode(0), new GraphNode(1)];
             const edge = new GraphEdge(nodes[0], nodes[1]);
             graph.addEdge(edge);
@@ -98,7 +98,7 @@ describe('Graph', () => {
 
     describe('getNodes', () => {
         it('should return all nodes', () => {
-            const graph = new Graph();
+            const graph = new Graph<number>();
             const nodes = [
                 new GraphNode(0),
                 new GraphNode(1),
@@ -117,7 +117,7 @@ describe('Graph', () => {
 
     describe('getEdges', () => {
         it('should return all edges', () => {
-            const graph = new Graph();
+            const graph = new Graph<number>();
             const nodes = [
                 new GraphNode(0),
                 new GraphNode(1),
@@ -148,7 +148,7 @@ describe('Graph', () => {
 
     describe('findNodeByKey', () => {
         it('should return a node if it exists in the graph', () => {
-            const graph = new Graph();
+            const graph = new Graph<number>();
             const node = new GraphNode(0);
 
             graph.addNode(node);
@@ -157,7 +157,7 @@ describe('Graph', () => {
         });
 
         it('should return undefined if node does not exist in the graph', () => {
-            const graph = new Graph();
+            const graph = new Graph<number>();
 
             expect(graph.findNodeByKey('notanode')).toBe(undefined);
         });
@@ -165,7 +165,7 @@ describe('Graph', () => {
 
     describe('findEdgeByNodes', () => {
         it('should find an edge connected by two nodes', () => {
-            const graph = new Graph();
+            const graph = new Graph<number>();
             const nodes = [new GraphNode(0), new GraphNode(1)];
             const edge = new GraphEdge(nodes[0], nodes[1]);
 
@@ -175,7 +175,7 @@ describe('Graph', () => {
         });
 
         it('should return undefined if no edge connects the two nodes', () => {
-            const graph = new Graph();
+            const graph = new Graph<number>();
             const nodes = [
                 new GraphNode(0),
                 new GraphNode(1),
@@ -194,7 +194,7 @@ describe('Graph', () => {
 
     describe('serialize', () => {
         it('should convert a Graph instance into a plain object', () => {
-            const graph = new Graph();
+            const graph = new Graph<number>();
             const nodes = [
                 new GraphNode(0),
                 new GraphNode(1),
@@ -246,7 +246,7 @@ describe('Graph', () => {
         });
 
         it('should create a stringifyable serialization', () => {
-            const graph = new Graph();
+            const graph = new Graph<number>();
             const nodes = [
                 new GraphNode(0),
                 new GraphNode(1),
@@ -265,7 +265,7 @@ describe('Graph', () => {
 
     describe('deserialize', () => {
         it('should recreate a seralized graph', () => {
-            const graph = new Graph();
+            const graph = new Graph<number>();
             const nodes = [
                 new GraphNode(0),
                 new GraphNode(1),
