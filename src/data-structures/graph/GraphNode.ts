@@ -1,5 +1,5 @@
-import { uuid } from 'utilities';
-import GraphEdge from './GraphEdge';
+import { uuid, isFunction } from 'utilities';
+import { GraphEdge } from './GraphEdge';
 import { Serializable } from '../interfaces';
 
 export type SerializedGraphNode<T> = {
@@ -8,8 +8,7 @@ export type SerializedGraphNode<T> = {
     edges: string[];
 };
 
-export default class GraphNode<T>
-    implements Serializable<SerializedGraphNode<T>> {
+export class GraphNode<T> implements Serializable<SerializedGraphNode<T>> {
     readonly key: string;
     value: T;
 
@@ -19,6 +18,14 @@ export default class GraphNode<T>
         this.key = key || uuid();
         this.value = value;
         this.edges = {};
+    }
+
+    updateValue(update: T | ((value: T) => T)) {
+        if (isFunction(update)) {
+            this.value = update(this.value);
+        } else {
+            this.value = update;
+        }
     }
 
     addEdge(edge: GraphEdge<T>): this {

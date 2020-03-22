@@ -1,5 +1,5 @@
-import GraphEdge, { SerializedGraphEdge } from './GraphEdge';
-import GraphNode, { SerializedGraphNode } from './GraphNode';
+import { GraphEdge, SerializedGraphEdge } from './GraphEdge';
+import { GraphNode, SerializedGraphNode } from './GraphNode';
 import { Serializable } from '../interfaces';
 
 export type SerializedGraph<T> = {
@@ -8,7 +8,7 @@ export type SerializedGraph<T> = {
     edges: SerializedGraphEdge[];
 };
 
-export default class Graph<T> implements Serializable<SerializedGraph<T>> {
+export class Graph<T> implements Serializable<SerializedGraph<T>> {
     private nodes: { [key: string]: GraphNode<T> };
     private edges: { [key: string]: GraphEdge<T> };
 
@@ -92,6 +92,10 @@ export default class Graph<T> implements Serializable<SerializedGraph<T>> {
         }
 
         return node.findConnectingEdge(to);
+    }
+
+    toJSON() {
+        return this.serialize();
     }
 
     serialize() {

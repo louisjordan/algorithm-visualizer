@@ -1,5 +1,5 @@
 import { uuid } from 'utilities';
-import GraphNode from './GraphNode';
+import { GraphNode } from './GraphNode';
 import { Serializable } from '../interfaces';
 
 export type SerializedGraphEdge = {
@@ -9,7 +9,7 @@ export type SerializedGraphEdge = {
     weight: number;
 };
 
-export default class GraphEdge<T> implements Serializable<SerializedGraphEdge> {
+export class GraphEdge<T> implements Serializable<SerializedGraphEdge> {
     readonly key: string;
     from: GraphNode<T>;
     to: GraphNode<T>;
