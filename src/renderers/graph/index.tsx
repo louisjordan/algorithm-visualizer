@@ -56,7 +56,7 @@ const GraphRenderer: React.FC<Props> = (props) => {
         nodes: props.nodes.map((n) => {
             const { visited, active, ...nodeValue } = n;
 
-            let node: any = { ...nodeValue }; // TODO: write / source declaration file for react-d3-array + remove any type
+            let node: any = { ...nodeValue }; // TODO: write / source declaration file for react-d3-graph + remove any type
 
             if (visited) {
                 node = { ...node, ...nodeConfig.highlight };

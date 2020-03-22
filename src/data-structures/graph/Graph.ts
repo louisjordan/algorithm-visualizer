@@ -26,30 +26,24 @@ export class Graph<T> implements Serializable<SerializedGraph<T>> {
     }
 
     addEdge(edge: GraphEdge<T>): this {
-        // add the edge
         this.edges[edge.key] = edge;
 
-        // look for from and to nodes in this graph
         let from = this.findNodeByKey(edge.from.key);
         let to = this.findNodeByKey(edge.to.key);
 
-        // if from node wasn't found, insert it
         if (!from) {
             this.addNode(edge.from);
             from = edge.from;
         }
 
-        // if to node wasn't found, insert it
         if (!to) {
             this.addNode(edge.to);
             to = edge.to;
         }
 
         if (this.directed) {
-            // if graph is directed only add edge to from node
             from.addEdge(edge);
         } else {
-            // otherwise add it to both
             from.addEdge(edge);
             to.addEdge(edge);
         }
@@ -58,10 +52,8 @@ export class Graph<T> implements Serializable<SerializedGraph<T>> {
     }
 
     removeEdge(edge: GraphEdge<T>): this {
-        // remove the edge
         delete this.edges[edge.key];
 
-        // remove edge reference from connected nodes
         edge.from.removeEdge(edge);
         edge.to.removeEdge(edge);
 
