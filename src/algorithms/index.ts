@@ -1,10 +1,12 @@
 import { AlgorithmDefinition } from './types';
 import insertionSort from './insertion-sort';
 import selectionSort from './selection-sort';
+import graphDFS from './graph-depth-first-search';
 
 const algorithms = {
     [insertionSort.key]: insertionSort,
     [selectionSort.key]: selectionSort,
+    [graphDFS.key]: graphDFS,
 };
 
 export default algorithms;
