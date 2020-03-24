@@ -12,18 +12,19 @@ import styled from 'styled-components';
 type IconProps = {
     clickable?: boolean;
 };
-const Icon = (icon: React.ComponentType<any>): React.FC<IconProps> => (
-    props
-) => {
+const Icon = (icon: React.ComponentType<any>): React.FC<IconProps> => ({
+    clickable,
+    ...props
+}) => {
     const Icon = styled(icon)`
         fill: #c5c8c6;
         width: 2em;
         height: 2em;
-        cursor: ${props.clickable ? 'pointer' : 'default'};
+        cursor: ${clickable ? 'pointer' : 'default'};
         transition: 266ms ease-in-out;
 
         &:hover {
-            ${props.clickable ? 'fill: #d5d7d6' : ''};
+            ${clickable ? 'fill: #d5d7d6' : ''};
         }
     `;
     return <Icon {...props} />;

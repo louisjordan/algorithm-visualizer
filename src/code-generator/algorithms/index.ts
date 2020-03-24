@@ -14,7 +14,7 @@ algorithmPaths().forEach(({ algorithmPath }) => {
     const functions = content.match(/^function.+^}/gms);
 
     if (!functions) {
-        throw new Error('No functions to read');
+        throw new Error(`No functions to read in ${algorithmPath}`);
     }
 
     const outputPath = path.join(algorithmPath, 'source.json');
