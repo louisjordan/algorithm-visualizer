@@ -15,12 +15,12 @@ const GraphDFSVisualiser: React.FC<Props> = (props) => {
         return null;
     }
 
-    const { graph, activeNode } = trace.state;
+    const { graph, activeVertex } = trace.state;
 
-    const nodes = graph.nodes.map((node) => ({
-        id: node.key,
-        active: activeNode ? activeNode.key === node.key : false,
-        ...node.value,
+    const nodes = graph.verticies.map((vertex) => ({
+        id: vertex.key,
+        active: activeVertex ? activeVertex.key === vertex.key : false,
+        ...vertex.value,
     }));
 
     const links = trace.state.graph.edges.map((edge) => ({

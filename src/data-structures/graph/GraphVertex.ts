@@ -2,13 +2,13 @@ import { uuid, isFunction } from 'utilities';
 import { GraphEdge } from './GraphEdge';
 import { Serializable } from '../interfaces';
 
-export type SerializedGraphNode<T> = {
+export type SerializedGraphVertex<T> = {
     key: string;
     value: T;
     edges: string[];
 };
 
-export class GraphNode<T> implements Serializable<SerializedGraphNode<T>> {
+export class GraphVertex<T> implements Serializable<SerializedGraphVertex<T>> {
     readonly key: string;
     value: T;
 
@@ -42,13 +42,13 @@ export class GraphNode<T> implements Serializable<SerializedGraphNode<T>> {
         return !!this.edges[edge.key];
     }
 
-    findConnectingEdge(node: GraphNode<T>): GraphEdge<T> | void {
+    findConnectingEdge(vertex: GraphVertex<T>): GraphEdge<T> | void {
         return Object.values(this.edges).find(
-            (edge) => edge.from === node || edge.to === node
+            (edge) => edge.from === vertex || edge.to === vertex
         );
     }
 
-    neighbours(): GraphNode<T>[] {
+    neighbours(): GraphVertex<T>[] {
         return Object.values(this.edges).map((edge) => {
             if (edge.from === this) {
                 return edge.to;

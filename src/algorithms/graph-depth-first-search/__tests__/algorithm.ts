@@ -4,7 +4,7 @@ import { Tracer } from 'tracer';
 import { GraphDFSTracerState } from '../types';
 
 describe('Graph Depth-First Search', () => {
-    it('should visit all nodes in the graph', () => {
+    it('should visit all verticies in the graph', () => {
         const tracer = new Tracer<GraphDFSTracerState>();
         const { graph, start } = graphDepthFirstSearch.defaultParameters();
         const result = depthFirstSearchRecursive(
@@ -12,6 +12,8 @@ describe('Graph Depth-First Search', () => {
             graph,
             start
         ).serialize();
-        expect(result.nodes.every((node) => node.value.visited)).toEqual(true);
+        expect(
+            result.verticies.every((vertex) => vertex.value.visited)
+        ).toEqual(true);
     });
 });

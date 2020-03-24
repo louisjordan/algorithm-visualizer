@@ -1,43 +1,43 @@
 import { GraphEdge, SerializedGraphEdge } from './GraphEdge';
-import { GraphNode, SerializedGraphNode } from './GraphNode';
+import { GraphVertex, SerializedGraphVertex } from './GraphVertex';
 import { Serializable } from '../interfaces';
 
 export type SerializedGraph<T> = {
     directed: boolean;
-    nodes: SerializedGraphNode<T>[];
+    verticies: SerializedGraphVertex<T>[];
     edges: SerializedGraphEdge[];
 };
 
 export class Graph<T> implements Serializable<SerializedGraph<T>> {
-    private nodes: { [key: string]: GraphNode<T> };
+    private verticies: { [key: string]: GraphVertex<T> };
     private edges: { [key: string]: GraphEdge<T> };
 
     readonly directed: boolean;
 
     constructor(directed = false) {
-        this.nodes = {};
+        this.verticies = {};
         this.edges = {};
         this.directed = directed;
     }
 
-    addNode(node: GraphNode<T>): this {
-        this.nodes[node.key] = node;
+    addVertex(vertex: GraphVertex<T>): this {
+        this.verticies[vertex.key] = vertex;
         return this;
     }
 
     addEdge(edge: GraphEdge<T>): this {
         this.edges[edge.key] = edge;
 
-        let from = this.findNodeByKey(edge.from.key);
-        let to = this.findNodeByKey(edge.to.key);
+        let from = this.findVertexByKey(edge.from.key);
+        let to = this.findVertexByKey(edge.to.key);
 
         if (!from) {
-            this.addNode(edge.from);
+            this.addVertex(edge.from);
             from = edge.from;
         }
 
         if (!to) {
-            this.addNode(edge.to);
+            this.addVertex(edge.to);
             to = edge.to;
         }
 
@@ -60,30 +60,33 @@ export class Graph<T> implements Serializable<SerializedGraph<T>> {
         return this;
     }
 
-    getNodes(): GraphNode<T>[] {
-        return Object.values(this.nodes);
+    getVerticies(): GraphVertex<T>[] {
+        return Object.values(this.verticies);
     }
 
     getEdges(): GraphEdge<T>[] {
         return Object.values(this.edges);
     }
 
-    findNodeByKey(key: string): GraphNode<T> | void {
-        return this.nodes[key];
+    findVertexByKey(key: string): GraphVertex<T> | void {
+        return this.verticies[key];
     }
 
     findEdgeByKey(key: string): GraphEdge<T> | void {
         return this.edges[key];
     }
 
-    findEdgeByNodes(from: GraphNode<T>, to: GraphNode<T>): GraphEdge<T> | void {
-        const node = this.findNodeByKey(from.key);
+    findEdgeByVerticies(
+        from: GraphVertex<T>,
+        to: GraphVertex<T>
+    ): GraphEdge<T> | void {
+        const vertex = this.findVertexByKey(from.key);
 
-        if (!node) {
+        if (!vertex) {
             return;
         }
 
-        return node.findConnectingEdge(to);
+        return vertex.findConnectingEdge(to);
     }
 
     toJSON() {
@@ -94,25 +97,25 @@ export class Graph<T> implements Serializable<SerializedGraph<T>> {
         return {
             directed: this.directed,
             edges: this.getEdges().map((edge) => edge.serialize()),
-            nodes: this.getNodes().map((node) => node.serialize()),
+            verticies: this.getVerticies().map((vertex) => vertex.serialize()),
         };
     }
 
     static deserialize<T>(serialized: SerializedGraph<T>): Graph<T> {
-        const nodes = serialized.nodes.map(
-            (node) => new GraphNode(node.value, node.key)
+        const verticies = serialized.verticies.map(
+            (vertex) => new GraphVertex(vertex.value, vertex.key)
         );
         const edges = serialized.edges.map((edge) => {
-            const from = nodes.find((node) => node.key === edge.from);
-            const to = nodes.find((node) => node.key === edge.to);
+            const from = verticies.find((vertex) => vertex.key === edge.from);
+            const to = verticies.find((vertex) => vertex.key === edge.to);
 
             if (!from || !to) {
                 const errors = [];
                 if (!from) {
-                    errors.push(`Cannot find from node ${edge.from}`);
+                    errors.push(`Cannot find from vertex ${edge.from}`);
                 }
                 if (!to) {
-                    errors.push(`Cannot find to node ${edge.to}`);
+                    errors.push(`Cannot find to vertex ${edge.to}`);
                 }
                 throw new Error(errors.join('\n'));
             }
@@ -122,7 +125,7 @@ export class Graph<T> implements Serializable<SerializedGraph<T>> {
 
         const graph = new Graph<T>(serialized.directed);
 
-        // adding edges to graph will also add nodes to graph and edge
+        // adding edges to graph will also add verticies to graph and edge
         edges.forEach((edge) => graph.addEdge(edge));
 
         return graph;

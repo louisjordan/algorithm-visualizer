@@ -1,21 +1,21 @@
 import { Tracer } from '../../tracer';
 import {
     Graph,
-    GraphNode,
+    GraphVertex,
     SerializedGraph,
-    SerializedGraphNode,
+    SerializedGraphVertex,
 } from 'data-structures/graph';
 
 export type GraphDFSTracerState = {
-    graph: SerializedGraph<DFSNodeState>;
-    activeNode: SerializedGraphNode<DFSNodeState> | null;
+    graph: SerializedGraph<DFSVertexState>;
+    activeVertex: SerializedGraphVertex<DFSVertexState> | null;
 };
 
 export type GraphDFSTracer = Tracer<GraphDFSTracerState>;
 
-export type DFSGraph = Graph<DFSNodeState>;
-export type DFSGraphNode = GraphNode<DFSNodeState>;
-export type DFSNodeState = {
+export type DFSGraph = Graph<DFSVertexState>;
+export type DFSGraphVertex = GraphVertex<DFSVertexState>;
+export type DFSVertexState = {
     label: string;
     visited: boolean;
 };

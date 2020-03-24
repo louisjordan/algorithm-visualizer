@@ -1,5 +1,5 @@
 import { uuid } from 'utilities';
-import { GraphNode } from './GraphNode';
+import { GraphVertex } from './GraphVertex';
 import { Serializable } from '../interfaces';
 
 export type SerializedGraphEdge = {
@@ -11,13 +11,13 @@ export type SerializedGraphEdge = {
 
 export class GraphEdge<T> implements Serializable<SerializedGraphEdge> {
     readonly key: string;
-    from: GraphNode<T>;
-    to: GraphNode<T>;
+    from: GraphVertex<T>;
+    to: GraphVertex<T>;
     weight: number;
 
     constructor(
-        from: GraphNode<T>,
-        to: GraphNode<T>,
+        from: GraphVertex<T>,
+        to: GraphVertex<T>,
         weight: number = 1,
         key?: string
     ) {

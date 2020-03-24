@@ -1,3 +1,3 @@
 export * from './Graph';
-export * from './GraphNode';
+export * from './GraphVertex';
 export * from './GraphEdge';
