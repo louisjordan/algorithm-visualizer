@@ -3,6 +3,7 @@ import { Tracer } from '../tracer';
 
 export enum Group {
     Sorting = 'Sorting',
+    Graph = 'Graph',
 }
 
 export type AlgorithmDefinition<TracerState, Parameters, Output> = {

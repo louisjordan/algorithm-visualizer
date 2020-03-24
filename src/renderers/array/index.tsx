@@ -14,7 +14,7 @@ const ArrayRenderer: React.FC<Props> = (props) => {
     return (
         <Array>
             {elements.map((value, index) => (
-                <ArrayElement highlight={props.highlight === index}>
+                <ArrayElement key={index} highlight={props.highlight === index}>
                     {pointer === index && <ArrayPointer>↓</ArrayPointer>}
                     {position === index && (
                         <ArrayPointer>

@@ -29,7 +29,7 @@ export enum PlaybackSpeed {
 }
 
 function newVisualiser(key: string) {
-    const algorithm = algorithms[key];
+    const algorithm = algorithms[key] as any;
     const tracer = new Tracer<any>(); // TODO: remove any type
     algorithm.run(tracer, algorithm.defaultParameters());
     return { algorithm, tracer };

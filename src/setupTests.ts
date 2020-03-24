@@ -8,3 +8,6 @@ import '@testing-library/jest-dom/extend-expect';
 
 // build algorithm source files
 execSync('npm run build-sources');
+
+// mock README imports
+jest.mock(`!raw-loader!./README.md`, () => '', { virtual: true });
