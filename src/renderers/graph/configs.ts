@@ -8,7 +8,7 @@ export const baseD3Config = {
     node: {
         color: '#404040',
         fontColor: '#bfbfbf',
-        fontSize: '1em',
+        fontSize: 16,
         size: 500,
         strokeColor: '#333333',
         strokeWidth: 3,
