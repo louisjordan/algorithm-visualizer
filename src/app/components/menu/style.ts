@@ -23,6 +23,37 @@ export const MenuToggle = styled.div`
     top: 1em;
 `;
 
+export const MenuHeader = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em 0;
+
+    svg {
+        width: 5em;
+    }
+`
+
+export const MenuFooter = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+
+    svg {
+        fill: #303030;
+        width: 2em;
+        transition: all 300ms ease-in-out;
+
+        &:hover {
+            fill: #474747;
+        }
+    }
+`
+
 type MenuGroupListProps = {};
 export const MenuGroupList = styled.ul`
     list-style: none;
@@ -38,7 +69,7 @@ export const MenuGroupTitle = styled.span`
     padding: 0.6em 2em 0.6em 1em;
     background: #1f1f1f;
     display: block;
-    color: #bfbfbf;
+    color: #bfbfbf; 
 `;
 
 type MenuItemListProps = {};
