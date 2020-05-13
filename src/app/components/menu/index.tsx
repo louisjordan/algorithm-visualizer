@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { MenuIcon, CloseIcon } from 'app/components/icons';
+import { Link } from 'app/router';
+import { MenuIcon, CloseIcon, LogoLightIcon, GitHubIcon } from 'app/components/icons';
 import {
     MenuContainer,
     MenuToggle,
+    MenuHeader,
+    MenuFooter,
     MenuGroupList,
     MenuGroup,
     MenuItemList,
@@ -22,14 +25,21 @@ type Props = {
 export const Menu: React.FC<Props> = (props) => {
     const { groups } = props;
     const [open, setOpen] = useState(false);
+
     function toggleMenu() {
         setOpen((open) => !open);
     }
+
     return (
         <MenuContainer open={open}>
             <MenuToggle onClick={toggleMenu}>
                 {open ? <CloseIcon clickable /> : <MenuIcon clickable />}
             </MenuToggle>
+            <Link to="/">
+                <MenuHeader>
+                    <LogoLightIcon clickable />
+                </MenuHeader>
+            </Link>
             <MenuGroupList>
                 {Object.keys(groups).map((group) => (
                     <MenuGroup key={group}>
@@ -46,6 +56,11 @@ export const Menu: React.FC<Props> = (props) => {
                     </MenuGroup>
                 ))}
             </MenuGroupList>
+            <MenuFooter>
+                <Link to="https://github.com/louisjordan/algorithm-visualiser" external>
+                    <GitHubIcon clickable />
+                </Link>
+            </MenuFooter>
         </MenuContainer>
     );
 };

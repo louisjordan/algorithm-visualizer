@@ -16,14 +16,21 @@ export const Router: React.FC<React.ComponentProps<typeof reach.Router>> = (
     />
 );
 
-export const Link: React.FC<React.ComponentProps<typeof reach.Link>> = (
-    props
-) => {
-    const { ref, ...linkProps } = props;
+type LinkProps = React.ComponentProps<typeof reach.Link> & {
+    external?: boolean;
+};
+
+export const Link: React.FC<LinkProps> = (props) => {
+    const { ref, external = false, ...linkProps } = props;
 
     if (typeof linkProps.to === 'string') {
-        // Links should operate relative to basepath
-        linkProps.to = `${basepath}${linkProps.to}`;
+        if (external) {
+            // use a normal anchor tag for external links
+            return <a href={linkProps.to} target="_about">{linkProps.children}</a>;
+        } else {
+            // internal links should operate relative to basepath
+            linkProps.to = `${basepath}${linkProps.to}`;
+        }
     }
 
     return <reach.Link {...linkProps} />;
