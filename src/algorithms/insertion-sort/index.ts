@@ -13,7 +13,7 @@ const insertionSort: AlgorithmDefinition<
 > = {
     key: 'insertion-sort',
     name: 'Insertion Sort',
-    group: Group.Sorting,
+    group: Group.Array,
     source: source.functions.join('\n\n'),
     doc,
     visualiser,

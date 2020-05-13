@@ -13,7 +13,7 @@ const selectionSort: AlgorithmDefinition<
 > = {
     key: 'selection-sort',
     name: 'Selection Sort',
-    group: Group.Sorting,
+    group: Group.Array,
     source: source.functions.join('\n\n'),
     doc,
     visualiser,

@@ -2,7 +2,7 @@ import React from 'react';
 import { Tracer } from '../tracer';
 
 export enum Group {
-    Sorting = 'Sorting',
+    Array = 'Array',
     Graph = 'Graph',
 }
 
