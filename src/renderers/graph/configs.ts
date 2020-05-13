@@ -2,8 +2,8 @@ export const baseD3Config = {
     maxZoom: 1,
     minZoom: 1,
     d3: {
-        gravity: -1000,
-        linkLength: 50,
+        gravity: -300,
+        linkLength: 500,
     },
     node: {
         color: '#404040',
