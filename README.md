@@ -1,6 +1,6 @@
-<div style="text-align: center">
-  <img src="public/img/logo-full@0.5x.png" alt="Algorithm Visualiser Logo" />
-</div>
+<p align="center">
+  <img src="public/img/logo-dark@0.5x.png" alt="Algorithm Visualiser Logo" />
+</p>
 
 # Algorithm Visualiser
 
