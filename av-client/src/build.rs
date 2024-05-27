@@ -66,6 +66,8 @@ enum AlgorithmTag {
 pub fn build(output_path: &str) -> Result<()> {
     info!("Building algorithms from /{output_path}");
 
+    let timer = Instant::now();
+
     for dir in fs::read_dir(output_path)? {
         if let Ok(dir) = dir {
             let id = dir.file_name().to_str().unwrap().to_owned();
@@ -104,18 +106,18 @@ pub fn build(output_path: &str) -> Result<()> {
                     }
                 }
 
-                let timer = Instant::now();
+                let transform_start = timer.elapsed();
                 let mut transformed_src =
                     av_transform::transform(&language, fs::read_to_string(entry_file).unwrap())
                         .unwrap();
 
                 // move this into av-transform
                 transformed_src =
-                    format!("var tracer = require(\"./tracer\").Tracer();\n{transformed_src}");
+                    format!("var tracer = require(\"./tracer\").Tracer();\n{transformed_src}\ntracer.write();");
 
                 info!(
                     "[{id}] Successfully transformed {language:?} implementation in {}ms",
-                    timer.elapsed().as_millis()
+                    (timer.elapsed() - transform_start).as_millis()
                 );
 
                 let transform_dest = output_dir.join(&entry.file_name().unwrap());
@@ -130,6 +132,16 @@ pub fn build(output_path: &str) -> Result<()> {
                 info!("[{id}] Bundling tracer into {tracer_dest:?}");
 
                 fs::write(tracer_dest, av_tracer::get_tracer(&language)).unwrap();
+
+                let execution_start = timer.elapsed();
+                info!("[{id}] Executing implementation");
+
+                av_execute::execute(&language, transform_dest.canonicalize().unwrap());
+
+                info!(
+                    "[{id}] Successfully executed implementation in {}ms",
+                    (timer.elapsed() - execution_start).as_millis()
+                );
             }
         }
     }

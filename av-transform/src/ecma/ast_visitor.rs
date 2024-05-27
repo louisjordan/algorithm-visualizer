@@ -38,7 +38,7 @@ impl ASTVisitor {
 
             if let Some(left_sym) = left_sym {
                 return Some(create_tracer_call(
-                    "assign",
+                    "assignment",
                     vec![left_sym],
                     self.line_count_for_pos(expr.span.lo).unwrap(), // TODO: handle errors
                 ));
@@ -202,13 +202,13 @@ insertionSort([4, 3, 2, 1]);",
         pointer = position - 1;
         while(pointer >= 0 && list[pointer] > x){
             list[pointer + 1] = list[pointer];
-            Tracer.assign(7, {
+            Tracer.assignment(7, {
                 list
             });
             pointer--;
         }
         list[pointer + 1] = x;
-        Tracer.assign(10, {
+        Tracer.assignment(10, {
             list
         });
         position++;

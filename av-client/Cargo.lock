@@ -181,6 +181,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "av-common",
+ "av-execute",
  "av-tracer",
  "av-transform",
  "env_logger",
@@ -194,6 +195,13 @@ name = "av-common"
 version = "0.1.0"
 dependencies = [
  "serde",
+]
+
+[[package]]
+name = "av-execute"
+version = "0.1.0"
+dependencies = [
+ "av-common",
 ]
 
 [[package]]

@@ -17,7 +17,7 @@ module.exports.Tracer = function Tracer() {
             pushBreakpoint("assignment", line, state);
         },
         write: function write() {
-            require("fs").writeFileSync("trace.json", JSON.stringify(breakpoints));
+            require("fs").writeFileSync(require("process").env.TRACE_DEST, JSON.stringify(breakpoints));
         }
     };
 };
