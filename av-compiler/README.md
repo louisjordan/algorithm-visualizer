@@ -1,3 +1,0 @@
-# Algorithm Visualiser Compiler
-
-> // TODO

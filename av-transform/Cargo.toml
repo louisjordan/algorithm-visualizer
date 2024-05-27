@@ -1,0 +1,18 @@
+[package]
+name = "av-transform"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.86"
+serde = { version = "1.0.202", features = ["derive"] }
+swc = "0.275.1"
+swc_atoms = "0.6.7"
+swc_common = "0.33.26"
+swc_core = "0.92.5"
+swc_ecma_ast = "0.113.4"
+swc_ecma_codegen = "0.149.1"
+swc_ecma_parser = "0.144.1"
+swc_ecma_transforms_testing = "0.141.1"
+swc_ecma_utils = "0.128.1"
+swc_ecma_visit = "0.99.1"

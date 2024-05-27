@@ -1,0 +1,5 @@
+title = "Insertion Sort"
+tags = ["array", "sort"]
+
+[implementations]
+ecmascript = "ecmascript/insertion-sort.js"
