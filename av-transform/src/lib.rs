@@ -1,9 +1,8 @@
 mod ecma;
 mod error;
-mod supported;
 
+use av_common::SupportedLanguage;
 use error::TransformError;
-pub use supported::{EcmaScriptVersion, SupportedLanguage};
 
 pub fn transform(language: &SupportedLanguage, src: String) -> Result<String, TransformError> {
     match language {

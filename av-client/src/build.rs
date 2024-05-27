@@ -2,7 +2,7 @@ use anyhow::Result;
 use log::{error, info};
 use std::{collections::HashMap, fs, path::PathBuf, time::Instant};
 
-use av_transform::{EcmaScriptVersion, SupportedLanguage};
+use av_common::{EcmaScriptVersion, SupportedLanguage};
 use serde::{de, Deserialize, Deserializer};
 
 #[derive(Deserialize, Debug)]
@@ -86,7 +86,8 @@ pub fn build(output_path: &str) -> Result<()> {
 
                 info!("[{id}] Cleared {output_dir:?}");
 
-                // copy implementation files to build folder
+                info!("[{id}] Copying implementation files",);
+
                 for file in fs::read_dir(&entry_file.parent().unwrap()).unwrap() {
                     if let Ok(file) = file {
                         let path = file.path();
@@ -104,9 +105,13 @@ pub fn build(output_path: &str) -> Result<()> {
                 }
 
                 let timer = Instant::now();
-                let transformed_src =
+                let mut transformed_src =
                     av_transform::transform(&language, fs::read_to_string(entry_file).unwrap())
                         .unwrap();
+
+                // move this into av-transform
+                transformed_src =
+                    format!("var tracer = require(\"./tracer\").Tracer();\n{transformed_src}");
 
                 info!(
                     "[{id}] Successfully transformed {language:?} implementation in {}ms",
@@ -119,6 +124,12 @@ pub fn build(output_path: &str) -> Result<()> {
                 info!(
                     "[{id}] Successfully wrote transformed {language:?} implementation to {transform_dest:?}",
                 );
+
+                let tracer_dest = output_dir.join("tracer.js");
+
+                info!("[{id}] Bundling tracer into {tracer_dest:?}");
+
+                fs::write(tracer_dest, av_tracer::get_tracer(&language)).unwrap();
             }
         }
     }

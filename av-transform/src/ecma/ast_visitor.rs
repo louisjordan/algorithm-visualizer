@@ -102,7 +102,7 @@ fn create_tracer_call(func: &str, syms: Vec<String>, line: u32) -> ExprStmt {
                 span: Default::default(),
                 obj: Box::new(Expr::Ident(Ident {
                     span: Default::default(),
-                    sym: Atom::new("Tracer"),
+                    sym: Atom::new("tracer"),
                     optional: false,
                 })),
                 prop: MemberProp::Ident(Ident {

@@ -5,6 +5,8 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0.86"
+av-common = { path = "../av-common" }
+av-tracer = { path = "../av-tracer" }
 serde = { version = "1.0.202", features = ["derive"] }
 swc = "0.275.1"
 swc_atoms = "0.6.7"

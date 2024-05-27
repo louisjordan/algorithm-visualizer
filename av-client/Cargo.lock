@@ -180,6 +180,8 @@ name = "av-client"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "av-common",
+ "av-tracer",
  "av-transform",
  "env_logger",
  "log",
@@ -188,10 +190,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "av-common"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "av-tracer"
+version = "0.1.0"
+dependencies = [
+ "av-common",
+]
+
+[[package]]
 name = "av-transform"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "av-common",
+ "av-tracer",
  "serde",
  "swc",
  "swc_atoms",

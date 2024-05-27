@@ -1,3 +1,4 @@
+use av_common::EcmaScriptVersion;
 use swc::Compiler;
 use swc_common::{
     errors::Handler, sync::Lrc, BytePos, FileName, Globals, LineCol, SourceMap, GLOBALS,
@@ -7,7 +8,7 @@ use swc_ecma_codegen::{text_writer::JsWriter, Emitter};
 use swc_ecma_parser::Syntax;
 use swc_ecma_visit::as_folder;
 
-use crate::{error::TransformError, supported::EcmaScriptVersion};
+use crate::error::TransformError;
 
 use super::ast_visitor::ASTVisitor;
 
